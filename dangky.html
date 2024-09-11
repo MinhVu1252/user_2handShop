@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MECURY Sneaker SecondHand</title>
+    <link rel="stylesheet" type="text/css" href="\index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/bootstrap.min.css" rel="stylesheet">
+    <link href="/footer.css" rel="stylesheet">
+    <link href="/dangky.css" rel="stylesheet">
+    <link href="/font-awesome.min.css" rel="stylesheet">
+    <link href="/prettyPhoto.css" rel="stylesheet">
+    <link href="/price-range.css" rel="stylesheet">
+    <link href="/animate.css" rel="stylesheet">
+    <link href="/product.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <link href="/responsive.css" rel="stylesheet">
+    <link href="/test_slide_product.css" rel="stylesheet">
+   
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function createlg() {
+            // $.post("http://localhost:3004/createlogin", {
+            //     TenKH: $("#TenKH").val(),
+            //     UserLogin: $("#UserLogin").val(),
+            //     Password: $("#Password").val(),
+            //     Address: $("#DiaChi").val(),
+            //     Phonenumber: $("#SDT").val(),
+            // }, function(data, status) {
+            //     if (!data || data.length == 0) {
+            //         alert("Đăng nhập thành công");
+            //     }
+            // })
+
+              var TenKH = $("#TenKH").val();
+              var UserLogin = $("#UserLogin").val();
+              var Password = $("#Password").val();
+              var Address = $("#DiaChi").val();
+              var Phonenumber = $("#SDT").val();
+
+             // Kiểm tra xem có nhập đủ thông tin hay không
+            if (TenKH === "" || UserLogin === "" || Password === "" || Address === "" || Phonenumber === "") {
+                 alert("Vui lòng điền đủ thông tin");
+                 return; // Dừng lại nếu không đủ thông tin
+            }
+
+                // Tiếp tục xử lý đăng ký nếu thông tin đầy đủ
+            $.post("http://localhost:3004/createlogin", {
+                TenKH: TenKH,
+                UserLogin: UserLogin,
+                Password: Password,
+                Address: Address,
+                Phonenumber: Phonenumber
+            }, function(data, status) {
+                if (!data || data.length == 0) {
+                    alert("Đăng ký thành công");
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <a id="banner"><img src="img/logo2hand.jpg" style="width:30%"></a>
+        <div class="header-right">
+            <!-- <li><a href="./dangnhap.html">Đăng nhập</a></li> -->
+            <div class="box">
+                <!-- <div class="container-1">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <input type="tìm kiếm" id="search" placeholder="Search..." />
+                </div> -->
+            </div>
+        </div>
+        <div id="menu">
+            <ul>
+                <li><a href="http://localhost:3004/index" Tile="Trang chủ" class="active">Trang chủ </a></li>
+                    <li><a href="http://localhost:3004/shopp">Shop</a></li>
+                    <li><a href="http://localhost:3004/ban">Bán</a></li>
+                    <li><a href="http://localhost:3004/tintuc">Tin Tức</a></li>
+                    <li><a href="http://localhost:3004/lienhe">Liên Hệ</a></li>
+                    <li><a href="http://localhost:3004/dangnhap">Đăng nhập</a></li>
+            </ul>
+        </div>
+
+        <div class="header1">
+            <a class="home"><img class="logo" src="img/logo2hand.jpg"></a>
+            <ul id="navmobi">
+                <li class="bank"><a class="tour" href="index.html" Tile="Trang chủ" class="active">Trang chủ </a></li>
+                <li class="bank"><a class="tour" href="http://localhost:3004/shopp">Shop</a></li>
+                <li class="bank"><a class="tour" href="http://localhost:3004/ban">Bán</a></li>
+                <li class="bank"><a class="tour" href="http://localhost:3004/tintuc">Tin Tức</a></li>
+                <li class="bank"><a class="tour" href="http://localhost:3004/lienhe">Liên Hệ</a></li>
+                <li class="bank"><a class="tour" href="http://localhost:3004/dangnhap">Đăng nhập</a></li>
+            </ul>
+    
+            <div id="husbank">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </div>
+    <main>
+        <img src="img/logo2hand.jpg" class="logo1" width="250" height="250" align="left">
+
+        <div class="login1">
+            <div class="login-form">
+                <!-- <form action="" method="post"> -->
+                <h3 style="color: orange" align="center"><b>Tạo tài khoản Giày 2hand</b></h3>
+                <div class="input-box">
+                    <div class="divcl">
+                        <tr>
+                            <td><span class="emailcl">UserName:</span> </td>
+                            <td><input class="textype" type="text" placeholder="Nhập họ và tên " id="TenKH"></td>
+                        </tr>
+                    </div>
+
+                    <div class="divcl">
+                        <tr>
+                            <td><span class="emailcl">UserLogin:</span> </td>
+                            <td><input class="textype" type="text" id="UserLogin" placeholder="Nhập tên đăng nhập"></td>
+                        </tr>
+                    </div>
+
+                    <div class="divcl">
+                        <tr>
+                            <td><span class="emailcl">Password:</span> </td>
+                            <td><input class="textype" type="password" placeholder="Nhập mật khẩu" id="Password"></td>
+                        </tr>
+                    </div>
+
+                  
+                    <div class="divcl1">
+                        <tr>
+                            <td><span class="email1">Address:</span></td>
+                            <td><input class="textype" id="DiaChi" placeholder="Nhập địa chỉ" type="text"></td>
+                        </tr>
+                    </div>
+
+
+                    
+
+                    <div class="divcl2">
+                        <tr>
+                            <td><span class="email2">Phone number:	</span></td>
+                            <td><input class="textype" placeholder="Nhập số điện thoại" id="SDT"></td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <form style="border: 2px solid #c53232; border-radius: 5px; " action="/uploadphoto1" enctype="multipart/form-data" method="POST"> 
+                                    <input   type="file" name="img2" accept="public/picture" />
+                                    <input type="submit" style="font-size: 20px; font-weight: bold;" value="Upload Avatar"/>
+                                  </form>
+                            </td>
+                        </tr>
+                        </br> <button style="margin-top: 20px; width: 150px; height: 40px; cursor: pointer; font-size: 15px; font-weight: bold; margin-left: 90px; background-color: orange; color: #fff;" onclick="createlg()"> Đăng ký</button>
+                        </br> <p class="paint"><a href="http://localhost:3004/dangnhap"> Đăng nhập</a></p>
+
+                    </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+
+
+            <div id="footer">
+                <p>
+
+                    Địa chỉ: 145 Lê Lư - Phú Thọ Hòa - Tân Phú - TP Hồ Chí Minh </br>
+                    Email: phamhoanganh5603@gmail.com </br>
+                    Số điện thoại: 0898638123 </br>
+                    Facebook: <a href="https://www.facebook.com/hoanganh3203/"> Hoang Anh</a></br>
+                </p>
+            </div>
+    </main>
+
+    <script>
+        const husbank = document.querySelector("#husbank");
+        const navmobi = document.querySelector("#navmobi");
+        husbank.addEventListener("click", mobiMenu);
+        function mobiMenu(){
+          husbank.classList.toggle("active");
+          navmobi.classList.toggle("active");
+        }
+      </script>
+</body>
+
+</html>

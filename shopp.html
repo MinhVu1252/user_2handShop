@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <title>MECURY Sneaker SecondHand</title>
+    <link href="/footer.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="\index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome.min.css" rel="stylesheet">
+    <link href="/prettyPhoto.css" rel="stylesheet">
+    <link href="/price-range.css" rel="stylesheet">
+    <link href="/animate.css" rel="stylesheet">
+    <link href="/product.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <link href="/responsive.css" rel="stylesheet">
+    <link href="/test_slide_product.css" rel="stylesheet">
+    <script>
+         function muaHang(id) {
+            id = id + "";
+            var lstSP = localStorage.getItem("lstSP");
+            var arrSP = [];
+            if (!lstSP) {
+                lstSP = "";
+            } else {
+                arrSP = lstSP.split(',');
+            }
+            if (arrSP.indexOf(id) == -1) {
+                arrSP.push(id);
+                alert("Thêm vào giỏ hàng thành công")
+            }
+            localStorage.setItem("lstSP", arrSP.join(','))
+        }
+
+        function sortProduct() {
+            searchProducts();
+        }
+
+        function displayProduct(data) {
+            var products = "";
+            for (i = 0; i < data.length; i++) {
+                products += `<div style=" text-align: center;  ; height: 370px; width: 230px; margin: 20px ;  margin-left: 30px; display:inline-block; " >
+             <a> <img style=" height: 300px; cursor: pointer; width: 250px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+                 border-radius: 5px;margin-bottom: 10px; " src='../img/${data[i].img}' /></a>
+             <span>${data[i].name}</span><br/>
+             <span style="color:red; ">${data[i].price} vnd</span><br/>
+             <button style="padding: 5px 10px;  border-radius: 5px; cursor: pointer;   border: 2px solid gray;    font-weight: bold;
+             background-color: rgb(79, 209, 107);" onclick="muaHang (${data[i].id})"> Buy</button>
+             </div>`
+            }
+            $('#contenttt1').html(products);
+        }
+
+
+      
+
+        function innit() {
+            var user = localStorage.getItem("user");
+            var picture = localStorage.getItem("picture");
+            var pass = localStorage.getItem("pass");
+            if (user == null || user == "" || user == undefined) {
+                $("#logggin").html("chưa đăng nhập")
+            } else {
+                $("#logggin").html("Xin chào: " + user)
+                img = `<img style="width: 50px; height: 50px; border-radius: 30px;" src='../img/${picture}'/>`
+                $("#idimg").html(img);
+            }
+        }
+
+        $(document).ready(function() {
+            innit();
+            $.get("http://localhost:3004/getAllProduct", function(data, status) {
+                displayProduct(data)
+            });
+        });
+
+
+        function searchProducts() {
+            $.post("http://localhost:3004/searchProduct", {
+                search: $("#txtSearch").val(),
+                sort: $("#ddSort").val()
+            }, function(data, status) {
+                var products = "";
+                if (!data || data.length == 0) {
+                    $('#content').html("<br/><div style='text-align:center;color:red' >Khong tim thay san pham</div>");
+                } else {
+                    displayProduct(data)
+                }
+            })
+        }
+
+        function logout() {
+            $.post("/userLogin", {
+                userName: $("#userName").val(),
+                password: $("#password").val(),
+            }, function(data, status) {
+              
+                  localStorage.removeItem("user");
+                  localStorage.removeItem("picture");
+                  localStorage.removeItem("userId");
+                  window.location.href = "/dangnhap";
+            })
+        }
+
+        function Thongtin(){
+          $.post("/userLogin", {
+                userName: $("#userName").val(),
+                password: $("#password").val(),
+            }, function(data, status) {
+              if(userName === user & password === pass){
+                window.location.href = "/Thongtin";
+              }
+            })
+        }
+
+    </script>
+
+
+ <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <div class="header">
+        <a id="banner"><img src="img/logo2hand.jpg" style="width:30%"></a>
+        <div class="header-right">
+            <!-- <li><a href="./dangnhap.html">Đăng nhập</a></li> -->
+            <div class="box">
+                <div class="container-1" style="margin-right: 80px;">
+                  <!-- <span class="icon"><i class="fa fa-search"></i></span>
+                    <input type="tìm kiếm" placeholder="Search..." /> -->           
+
+  </div>
+  <u id="nav2">
+    <li>
+      <a id="idimg" style="width: 50px; height: 50px; border-radius: 20px; margin-left: 200px; cursor: pointer;" href=""></a>
+  <!-- <div id="idimg" style="width: 50px; height: 50px; border-radius: 20px; margin-left: 40px; cursor: pointer;"> -->
+    <ul class="moreinfo">
+      <li><a onclick="Thongtin()">Thông tin</a></li>
+      <li><a onclick="logout()" href="">Đăng xuất</a></li>
+    </ul>
+  <!-- </div> -->
+  </li>
+  </u>
+</div>
+  </div>
+<div id="menu" style="width: 2500px;">
+  <ul>
+    <li><a href="http://localhost:3004/index" Tile="Trang chủ" class="active">Trang chủ </a></li>
+    <li><a href="http://localhost:3004/shopp">Shop</a></li>
+    <li><a href="http://localhost:3004/ban">Bán</a></li>
+    <li><a href="http://localhost:3004/tintuc">Tin Tức</a></li>
+    <li><a href="http://localhost:3004/lienhe">Liên Hệ</a></li>
+    <li><a href="http://localhost:3004/dangnhap">Đăng nhập</a></li>
+  </ul>
+ 
+</div>
+</div>
+
+
+
+<div class="header1">
+  <a class="home"><img class="logo" src="img/logo2hand.jpg"></a>
+  <ul id="navmobi">
+      <li class="bank"><a class="tour" href="http://localhost:3004/index" Tile="Trang chủ" class="active">Trang chủ </a></li>
+      <li class="bank"><a class="tour" href="http://localhost:3004/shopp">Shop</a></li>
+      <li class="bank"><a class="tour" href="http://localhost:3004/ban">Bán</a></li>
+      <li class="bank"><a class="tour" href="http://localhost:3004/tintuc">Tin Tức</a></li>
+      <li class="bank"><a class="tour" href="http://localhost:3004/lienhe">Liên Hệ</a></li>
+      <li class="bank"><a class="tour" href="http://localhost:3004/dangnhap">Đăng nhập</a></li>
+  </ul>
+
+  <div id="husbank">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+  </div>
+</div>
+
+<div id="contenttt">
+  <a href="http://localhost:3004/shopping"><i style="font-size: 25px;" class="seachfb fa fa-shopping-cart"></i> </a>
+ </div>
+</br>   
+   
+
+
+    <section>
+        <div class="container ">
+          <div class="row ">
+            <div class="col-sm-12 padding-right ">
+              <div class="features_items "><!--features_items-->
+                <h2 class="title text-center ">Features Items</h2>
+                <div id="timkiem">
+                <input id="txtSearch" placeholder="Search" />
+                <button class="tim"  onclick="searchProducts()">Search</button> 
+    <!-- <input class="tim" type="button" value="Tìm" onclick="searchProducts()" /> -->
+                <select id="ddSort" onchange="sortProduct()"">
+                  <option value="[index]">Mặc Định</option>
+                  <option value="price">Giá</option>
+                  <option value="name">Tên</option>
+                </select>
+                </div>
+
+                <div id="contenttt1"></div>
+                <!-- bắt đầu 1 sản phẩm -->
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides01 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/2a.jpg " style="width:250px; height:250px; ">
+                          </div>
+                        
+                          <div class="mySlides01 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/2b.jpg " style="width:250px; height:250px; ">
+                          </div>
+                        
+                          <div class="mySlides01 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/2c.jpg " style="width:250px; height:250px; ">
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>650.000đ</h2>
+                        <p><b>Jordan6 Maroom</b></p>
+                        <p>Màu hơi scream nha mọi người</p>
+                        <p>Size 38 ~ 24cm</p>
+                        <p>Condition 9 (có repaint nhẹ ở đế)</p> 
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                     <!-- <div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>650.000đ</h2>
+                          <p><b>Jordan6 Maroom</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div> -->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào giỏ hàng</a></li>
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào so sánh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- kết thúc 1 sản phẩm  -->
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides02 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/1d.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides02 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/1b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides02 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/1a.jpg " style="width:250px; height:250px; ">
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>499.000đ</h2>
+                        <p><b>Convers High tops White</b></p>
+                        <p>---</p>
+                        <p>Size 36.5 fit 37 ~ 23cm</p>
+                        <p>Condition 9+</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                    <!--  <div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>499.000đ</h2>
+                          <p><b>Convers High tops White</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào giỏ hàng</a></li>
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào so sánh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides03 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/3a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides03 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/3b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides03 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/3c.jpg " style="width:250px; height:250px; ">
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>650.000đ</h2>
+                        <p><b>Fila Ray Script</b></p>
+                        <p>Siêu đẹp ạ</p>
+                        <p>Size 37 ~ 23,5cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                      <!--<div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>650.000đ</h2>
+                          <p><b>Fila Ray Script</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="choose ">-->
+                      <ul class="nav nav-pills nav-justified ">
+                        <h4 style="color:red " align="center ">X Đã Bán X</h4>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides04 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/4a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides04 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/4b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides04 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/4c.jpg " style="width:250px; height:250px; ">
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>499.000đ</h2>
+                        <p><b>Das Mid</b></p>
+                        <p>---</p>
+                        <p>Size 37 ~ 23cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                   <!--   <div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>499.000đ</h2>
+                          <p><b>Das Mid</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào giỏ hàng</a></li>
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào so sánh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides05 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/5a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides05 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/5b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides05 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/5c.jpg " style="width:250px; height:250px; ">
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>680.000đ</h2>
+                        <p><b>New Balance 608</b></p>
+                        <p>---</p>
+                        <p>Size 37.5 ~ 24cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                   <!-- <div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>680.000đ</h2>
+                          <p><b>New Balance 608 </b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào giỏ hàng</a></li>
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào so sánh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides06 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/6a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides06 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/6b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides06 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/6c.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>499.000đ</h2>
+                        <p><b>Covers High Tops Star Waterproof</b></p>
+                        <p>siêu đẹp luôn </p>
+                        <p>Size 36.5 ~ 23cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                    <!--  <div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>499.000đ</h2>
+                          <p><b>Covers High Tops Star Waterproof</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào giỏ hàng</a></li>
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào so sánh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides07 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/7a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides07 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/7b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides07 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/7c.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>650.000đ</h2>
+                        <p><b>Nike AF1 Mid</b></p>
+                        <p>---</p>
+                        <p>Size 36.5 ~ 23,5cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                    <!--  <div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>650.000đ</h2>
+                          <p><b>Nike AF1 Mid</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào giỏ hàng</a></li>
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào so sánh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides08 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/8a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides08 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/8b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides08 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/8c.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>450.000đ</h2>
+                        <p><b>Vans SK8 Hi</b></p>
+                        <p>---</p>
+                        <p>Size 36.5 ~ 23cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                      <!--<div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>450.000đ</h2>
+                          <p><b>Vans SK8 Hi</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <h4 style="color:red " align="center ">X Đã Bán X</h4>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides09 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/9a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides09 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/9b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides09 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/9c.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>450.000đ</h2>
+                        <p><b>Vans OS Suede Platform</b></p>
+                        <p>---</p>
+                        <p>Size 38 ~ 24cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                  <!--    <div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>450.000đ</h2>
+                          <p><b>Vans OS Suede Platform</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div> -->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào giỏ hàng</a></li>
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào so sánh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides10 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/10b.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides10 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/10c.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides10 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/10a.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>420.000đ</h2>
+                        <p><b>Vans Star War</b></p>
+                        <p>---</p>
+                        <p>Size 36 ~ 22.5cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                   <!--   <div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>420.000đ</h2>
+                          <p><b>Vans Star War</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào giỏ hàng</a></li>
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào so sánh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides11 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/11a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides11 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/11b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides11 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/11c.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>490.000đ</h2>
+                        <p><b>Nike Air Max</b></p>
+                        <p>---</p>
+                        <p>Size 37.5 ~ 23.5cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                  <!--    <div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>490.000đ</h2>
+                          <p><b>Nike Air Max</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào giỏ hàng</a></li>
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào so sánh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides12 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/12a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides12 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/12b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides12 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/12c.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>620.000đ</h2>
+                        <p><b>Fila Ray</b></p>
+                        <p>Line có phản quang xịn xò </p>
+                        <p>Size 37 ~ 23.5cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                    <!--  <div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>620.000đ</h2>
+                          <p><b>Fila Ray</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào giỏ hàng</a></li>
+                        <li><a href=" "><i class="fa fa-plus-square "></i>Thêm vào so sánh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides13 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/14a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides13 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/14b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides13 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/14c.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>350.000đ</h2>
+                        <p><b>Coverse Hi Tops</b></p>
+                        <p>---</p>
+                        <p>Size 38 fit 39 ~ 24.5cm</p>
+                        <p>Condition 9-</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                      <!--<div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>620.000đ</h2>
+                          <p><b>Fila Ray</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <h4 style="color:red " align="center ">X Đã Bán X</h4>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides14 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/15a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides14 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/15b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides14 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/15c.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>680.000đ</h2>
+                        <p><b>New Balance 708</b></p>
+                        <p>---</p>
+                        <p>Size 37 ~ 23.5cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                      <!--<div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>620.000đ</h2>
+                          <p><b>Fila Ray</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <h4 style="color:red " align="center ">X Đã Bán X</h4>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides15 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/16a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides15 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/16b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides15 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/16c.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>550.000đ</h2>
+                        <p><b>Puma Suede Platform</b></p>
+                        <p>---</p>
+                        <p>Size 36 ~ 22.5cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                      <!--<div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>620.000đ</h2>
+                          <p><b>Fila Ray</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <h4 style="color:red " align="center ">X Đã Bán X</h4>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-3 ">
+                  <div class="product-image-wrapper ">
+                    <div class="single-products ">
+                      <div class="productinfo text-center ">
+                        <!-- <img src="img/piccar.jpg " alt=" " /> -->
+                        <!-- test -->
+                        <div class="slideshow-container01 ">
+    
+                          <!-- Full-width images with number and caption text -->
+                          <div class="mySlides16 fade01 ">
+                            <div class="numbertext01 ">1 / 3</div>
+                            <img src="img/13a.jpg " style="width:250px; height:250px; ">
+                          </div>                    
+                          <div class="mySlides16 fade01 ">
+                            <div class="numbertext01 ">2 / 3</div>
+                            <img src="img/13b.jpg " style="width:250px; height:250px; ">
+                          </div>
+    
+                          <div class="mySlides16 fade01 ">
+                            <div class="numbertext01 ">3 / 3</div>
+                            <img src="img/13c.jpg " style="width:250px; height:250px; " >
+                          </div>
+                        
+                          <!-- Next and previous buttons -->
+                          
+                        </div>
+                        <h2>420.000đ</h2>
+                        <p><b>Coverse Low White</b></p>
+                        <p>---</p>
+                        <p>Size 37 fit 37.5 ~ 23.5cm</p>
+                        <p>Condition 9</p>
+                        <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                      </div>
+                      <!--<div class="product-overlay ">
+                        <div class="overlay-content ">
+                          <h2>620.000đ</h2>
+                          <p><b>Fila Ray</b></p>
+                          <a href="# " class="btn btn-default add-to-cart "><i class="fa fa-shopping-cart "></i>MUA</a>
+                        </div>
+                      </div>-->
+                    </div>
+                    <div class="choose ">
+                      <ul class="nav nav-pills nav-justified ">
+                        <h4 style="color:red " align="center ">X Đã Bán X</h4>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+    
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+    
+    
+    
+    
+    <footer>
+         <div class="container5 ">
+             <!--Bắt Đầu Nội Dung Giới Thiệu-->
+             <div class="noi-dung about ">
+                 <h2>Về Chúng Tôi</h2>
+                 <p>Nhằm mục đích của khách hàng khi thay vì vứt đi những mặt hàng giày cũ, không vừa chân nhưng cần thanh lý, những khách hàng không có đủ điều kiện mua hàng mới nhưng vẫn thích và đam mê giày. Vì vậy đó là cơ sở để chúng tôi thành lập</p>
+                 <ul class="social-icon ">
+                     <li><a href="https://www.facebook.com/hoanganh3203/ "><i class="fa fa-facebook "></i></a></li>
+                     <li><a href=" "><i class="fa fa-twitter "></i></a></li>
+                     <li><a href=" "><i class="fa fa-youtube "></i></a></li>
+                 </ul>
+             </div>
+             <!--Kết Thúc Nội Dung Giới Thiệu-->
+             <!--Bắt Đầu Nội Dung Đường Dẫn-->
+             <div class="noi-dung links ">
+                 <h2>Đường Dẫn</h2>
+                 <ul>
+                     <li><a href="index.html ">Trang Chủ</a></li>
+                     <li><a href="# ">Về Chúng Tôi</a></li>
+                     <li><a href="# ">Thông Tin Liên Lạc</a></li>
+                     <li><a href="# ">Dịch Vụ</a></li>
+                     <li><a href="# ">Điều Kiện Chính Sách</a></li>
+                 </ul>
+             </div>
+             <!--Kết Thúc Nội Dung Đường Dẫn-->
+             <!--Bắt Đâu Nội Dung Liên Hệ-->
+             <div class="noi-dung contact ">
+                 <h2>Thông Tin Liên Hệ</h2>
+                 <ul class="info ">
+                     <li>
+                         <span><i class="fa fa-map-marker "></i></span>
+                         <span>
+                             145 Lê Lư - Phú Thọ Hòa - Tân Phú - TP Hồ Chí Minh<br />
+                             Việt Nam</span>
+                     </li>
+                     <li>
+                         <span><i class="fa fa-phone "></i></span>
+                         <p><a href="# ">+84 898 638 123</a>
+                            </p>
+                     </li>
+                     <li>
+                         <span><i class="fa fa-envelope "></i></span>
+                         <p><a href="# ">phamhoanganh5603@gmail.com</a></p>
+                    </li>
+                     <li>
+                         <form class="form ">
+                             <input type="email " class="form__field " placeholder="Đăng Ký Subscribe Email " />
+                             <button type="button " class="btn btn--primary uppercase ">Gửi</button>
+                         </form>
+                     </li>
+                 </ul>
+             </div>
+             <!--Kết Thúc Nội Dung Liên Hệ-->
+         </div>
+     </footer>
+    
+    <script src="js/test_slide_product.js "></script>
+    <script>
+      const husbank = document.querySelector("#husbank");
+      const navmobi = document.querySelector("#navmobi");
+      husbank.addEventListener("click", mobiMenu);
+      function mobiMenu(){
+        husbank.classList.toggle("active");
+        navmobi.classList.toggle("active");
+      }
+    </script>
+</body>
+</html>

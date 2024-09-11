@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="\index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/bootstrap.min.css" rel="stylesheet">
+      <link href="/font-awesome.min.css" rel="stylesheet">
+      <link href="/prettyPhoto.css" rel="stylesheet">
+      <link href="/footer.css" rel="stylesheet">
+      <link href="/price-range.css" rel="stylesheet">
+      <link href="/animate.css" rel="stylesheet">
+      <link href="/shopping-card.css" rel="stylesheet">
+      <link href="/product.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <link href="/responsive.css" rel="stylesheet">
+    <link href="/test_slide_product.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function remove(id){
+       debugger;
+       id = id+"";
+           var lstSP = localStorage.getItem("lstSP");
+           var arrSP = [];
+           var arrSPRM =[];
+           if(!lstSP){
+               lstSP = "";
+           }
+           else{
+             arrSP = lstSP.split(',');
+           }
+           arrSP.forEach((item)=>{
+             if(item != id){
+               arrSPRM.push(item)
+               
+             }
+           })
+
+           if(arrSPRM.length==0){
+             alert("Khong co san pham ");
+             arrSPRM.push("-1"); 
+           }
+           localStorage.setItem("lstSP",arrSPRM.join(','));
+           $.get("http://localhost:3004/getShoppingCard/"+localStorage.getItem("lstSP"), function (data, status) {
+               displayProduct(data)
+
+           });
+           
+     }
+       
+       function displayProduct(data){
+               var products = "";
+               for (i = 0; i < data.length; i++) {
+                 products += `<div style=" width: 1350px; height: 100px; display: flex;   text-align: center;  border: 1px solid ;  margin-left: 75px; " >
+                   <div style ="margin: 10px; margin-left: 140px>
+                     <div style = "width = 400px; ">
+           <a href='/detail/${data[i].id}'> <img style=" height: 80px;margin-left: 140px; cursor: pointer; width:100px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+               border-radius: 5px;margin-bottom: 10px; " src='../img/${data[i].img}' /></a>
+               </div>
+               <div style = "line-height: 100px; margin-right: 55px; width: 200px"> <span style: ">${data[i].name}</span><br/> </div>
+         
+             <span style="color:red; line-height: 100px; margin-right: 215px "  id="gia${data[i].id}">${data[i].price} vnd</span><br/>
+          
+           <div style = "height: 30px; width: 100px; display: flex; margin-top: 35px; align-items: center; justify-content: center;
+               border-radius: 5px; ;  border: 1px solid ; cursor: pointer;">
+        
+               <input style = "height: 30px; width: 100px;margin: 0 8px;" value= "1" type ="text"  onblur="tinhTongTien()" id="sl${data[i].id}"></input>     
+       </div>
+           <button style="padding: 5px 10px;  margin-left: 215px;border-radius: 5px; cursor: pointer;   border: 1px solid rgb(238, 216, 174);    font-weight: bold;
+   background-color: rgb(238, 216, 174);"  onclick="remove(${data[i].id})">Delete</button>
+       </div>
+       </div>` 
+               }
+               $('#content').html(products);
+               tinhTongTien();
+           }
+
+           function innit() {
+           var user = localStorage.getItem("user");
+           if (user == null || user == "" || user == undefined) {
+               window.location.href="/shopp";
+           }
+           else {
+               $("#logggin").html("Xin chào: " + user)
+           }
+
+           $.get("http://localhost:3004/getUser/"+localStorage.getItem("userId"), function (data, status) {
+               $("#SDT").text(data.SDT);
+               $("#TenKH").text(data.TenKH);
+               $("#DiaChi").text(data.DiaChi);
+           });
+       }
+
+       function tinhTongTien(){
+         var tongtien = 0;
+         var  arrSP = localStorage.getItem("lstSP").split(',');
+          arrSP.forEach(item =>{
+           if(item !== "-1"){
+                tongtien +=  parseFloat($("#sl"+item).val()) * parseFloat($("#gia" + item).text());
+             }        
+          });         
+           $("#tongtien").text(tongtien + " vnd");
+       }
+
+
+       $(document).ready(function () {
+           innit();
+           $.get("http://localhost:3004/getShoppingCard/"+localStorage.getItem("lstSP"), function (data, status) {
+               displayProduct(data)
+           });
+       });
+
+
+       function onBuyproduct(){
+          lstSP = [];
+          arrSP = localStorage.getItem("lstSP").split(',');
+          arrSP.forEach(item =>{
+           if(item !== "-1"){
+             var sp = {
+               maSP:item,
+               soluong:$("#sl"+item).val(),
+               gia:$("#gia" + item).text()
+             }
+             lstSP.push(sp)
+           }
+          })
+
+         $.post("/buyProducts", {
+              maKH: localStorage.getItem("userId"),
+              lstSP:lstSP
+           }, function(data,status){
+              alert("mua hang thanh cong")
+           })
+       }
+   </script>
+</head>
+<body>
+    <div class="header">
+        <a id="banner"><img src="img/logo2hand.jpg" style="width:30%"></a>
+        <div class="header-right">
+          <!-- <li><a href="./dangnhap.html">Đăng nhập</a></li> -->
+          <div class="box">
+        <!-- <div class="container-1">
+          <span class="icon"><i class="fa fa-search"></i></span>
+          <input type="tìm kiếm" id="search" placeholder="Search..." />
+        </div> -->
+      </div>
+        </div>
+      <div id="menu">
+        <ul>
+          <li><a href="http://localhost:3004/index" Tile="Trang chủ" class="active">Trang chủ </a></li>
+          <li><a href="http://localhost:3004/shopp">Shop</a></li>
+          <li><a href="http://localhost:3004/ban">Bán</a></li>
+          <li><a href="http://localhost:3004/tintuc">Tin Tức</a></li>
+          <li><a href="http://localhost:3004/lienhe">Liên Hệ</a></li>
+          <li><a href="http://localhost:3004/dangnhap">Đăng nhập</a></li>
+        </ul>
+      </div>
+      </div> 
+
+      <div class="header1">
+        <a class="home"><img class="logo" src="img/logo2hand.jpg"></a>
+        <ul id="navmobi">
+            <li class="bank"><a class="tour" href="http://localhost:3004/index" Tile="Trang chủ" class="active">Trang chủ </a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/shopp">Shop</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/ban">Bán</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/tintuc">Tin Tức</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/lienhe">Liên Hệ</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/dangnhap">Đăng nhập</a></li>
+        </ul>
+
+        <div id="husbank">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
+
+      <div id="kt"></div>
+      <div id="content1"> 
+        <div id="banle">
+          <div class="sp1">San pham</div>
+          <div id="gia">Don gia</div>
+          <div id="sl">So luong</div>
+          <div class="x">Xoa</div>
+      </div>
+        <div id="content"></div>
+        <div  id="onmh">
+        <div id="vienTT">
+          <table>
+            <tr>
+              <td>
+                Tong tien:
+              </td>
+              <td>
+                <div id="tongtien"></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Ten khach hang:
+              </td>
+              <td>
+                <div id="TenKH"></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                So dien thoai:
+              </td>
+              <td>
+                <div id="SDT"></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Dia chi:
+              </td>
+              <td>
+                <div id="DiaChi"></div>
+              </td>
+            </tr>
+          </table>
+          <div> <button id="onmhang" onclick="onBuyproduct()">Mua Hang</button></div>
+        </div>
+      </div>
+      </div>
+
+      <footer>
+        <div class="container5">
+            <!--Bắt Đầu Nội Dung Giới Thiệu-->
+            <div class="noi-dung about">
+                <h2>Về Chúng Tôi</h2>
+                <p>Nhằm mục đích của khách hàng khi thay vì vứt đi những mặt hàng giày cũ, không vừa chân nhưng cần thanh lý, những khách hàng không có đủ điều kiện mua hàng mới nhưng vẫn thích và đam mê giày. Vì vậy đó là cơ sở để chúng tôi thành lập</p>
+                <ul class="social-icon">
+                    <li><a href="https://www.facebook.com/hoanganh3203/"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                    <li><a href=""><i class="fa fa-youtube"></i></a></li>
+                </ul>
+            </div>
+            <!--Kết Thúc Nội Dung Giới Thiệu-->
+            <!--Bắt Đầu Nội Dung Đường Dẫn-->
+            <div class="noi-dung links">
+                <h2>Đường Dẫn</h2>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="#">Về Chúng Tôi</a></li>
+                    <li><a href="#">Thông Tin Liên Lạc</a></li>
+                    <li><a href="#">Dịch Vụ</a></li>
+                    <li><a href="#">Điều Kiện Chính Sách</a></li>
+                </ul>
+            </div>
+            <!--Kết Thúc Nội Dung Đường Dẫn-->
+            <!--Bắt Đâu Nội Dung Liên Hệ-->
+            <div class="noi-dung contact">
+                <h2>Thông Tin Liên Hệ</h2>
+                <ul class="info">
+                    <li>
+                        <span><i class="fa fa-map-marker"></i></span>
+                        <span>
+                           145 Lê Lư - Phú Thọ Hòa - Tân Phú - TP Hồ Chí Minh<br />
+                            Việt Nam</span>
+                    </li>
+                    <li>
+                        <span><i class="fa fa-phone"></i></span>
+                        <p><a href="#">+84 898 638 123</a>
+                           </p>
+                    </li>
+                    <li>
+                        <span><i class="fa fa-envelope"></i></span>
+                        <p><a href="#">phamhoanganh5603@gmail.com</a></p>
+                   </li>
+                    <li>
+                        <form class="form">
+                            <input type="email" class="form__field" placeholder="Đăng Ký Subscribe Email" />
+                            <button type="button" class="btn btn--primary  uppercase">Gửi</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <!--Kết Thúc Nội Dung Liên Hệ-->
+        </div>
+    </footer>
+
+    <script>
+      const husbank = document.querySelector("#husbank");
+      const navmobi = document.querySelector("#navmobi");
+      husbank.addEventListener("click", mobiMenu);
+      function mobiMenu(){
+        husbank.classList.toggle("active");
+        navmobi.classList.toggle("active");
+      }
+    </script>
+</body>
+</html>

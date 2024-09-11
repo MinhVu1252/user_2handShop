@@ -1,0 +1,52 @@
+.logo1 {
+    margin-top: 30px;
+    margin-left: 350px;
+}
+
+.login1 {
+    margin-right: -575px
+}
+
+.textype {
+    background-color: beige;
+    margin-bottom: 15px;
+    border-radius: 20px;
+}
+
+#footer{
+    width: 1470px;
+}
+
+.paint{
+    text-align: center;
+     margin-right: 35px;
+     cursor: pointer;
+     margin-top: 5px;
+     font-family: Trebuchet MS;
+
+}
+
+.paint:hover{
+    color: #FE642E;
+}
+
+@media screen and (max-width: 800px){
+    .logo1{
+        width: 30%;
+        margin: 0 35%;
+        height: 150px;
+    }
+
+    .login1{
+        width: 100%;
+        height: auto;
+        margin-top: 190px;
+    }
+
+    #footer{
+        width: 100%;
+        height: auto;
+        text-align: center;
+    }
+
+}

@@ -1,0 +1,66 @@
+
+
+
+.convers {
+    margin-left: 170px;
+    width: 300px; 
+ height: 200px;
+
+}
+
+.chu {
+    margin-left: 700px;
+    background: #ff9933;
+}
+
+.a {
+    width: 75%;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+h2.title {
+    color: #FE980F;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 15px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.travis{
+    color: orange;
+    text-align: center;
+}
+
+@media screen and (max-width: 800px){
+
+    h2.title{
+        padding-top: 50px;
+    }
+
+    .a{
+        margin: 5px 5px 20px 10px;
+        height: auto;
+        width: 100%;
+    }
+
+    .row{
+        width: 100%;
+        height: auto;
+        margin: 0;
+    }
+    .converse{
+         
+         margin: 0 27%;
+    }
+
+    .travis{
+        width: 100%;
+        height: auto;
+        margin-right: 70px;
+        text-align: center;
+    }
+}

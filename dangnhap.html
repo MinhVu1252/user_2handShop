@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MECURY Sneaker SecondHand</title>
+    <link rel="stylesheet" type="text/css" href="\index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/bootstrap.min.css" rel="stylesheet">
+    <link href="/footer.css" rel="stylesheet">
+    <link href="/font-awesome.min.css" rel="stylesheet">
+    <link href="/prettyPhoto.css" rel="stylesheet">
+    <link href="/price-range.css" rel="stylesheet">
+    <link href="/animate.css" rel="stylesheet">
+    <link href="/product.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <link href="/responsive.css" rel="stylesheet">
+    <link href="/test_slide_product.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        function login() {
+            $.post("/userLogin", {
+                userName: $("#userName").val(),
+                password: $("#password").val(),
+            }, function(data, status) {
+                if (!data || data.length == 0) {
+                    alert("user hoac pass ko dung");
+                }  else {
+                  localStorage.setItem("user",data[0].TenKH);
+                  localStorage.setItem("picture",data[0].picture);
+                  localStorage.setItem("userId",data[0].MaKH);
+                  localStorage.setItem("pass", data[0].Password);
+                  window.location.href = "/shopp";
+                }
+            })
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/login.js" type="text/javascript" charset="utf-8" async defer></script>
+</head>
+<style>
+    .logo1 {
+        margin-top: 30px;
+        margin-left: 350px;
+    }
+    /*  .login{
+    margin-right: -575px
+  }*/
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    section {
+        position: relative;
+        width: 100%;
+        height: auto;
+        display: flex;
+        margin-left: 400px;
+    }
+    
+    section .img-bg {
+        position: relative;
+        width: 50%;
+        height: 100%;
+    }
+    
+    section .img-bg img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    section .noi-dung {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+    }
+    
+    section .noi-dung .form {
+        width: 50%;
+    }
+    
+    section .noi-dung .form h2 {
+        color: #607d8b;
+        font-weight: 500;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        border-bottom: 4px solid #ff9933;
+        display: inline-block;
+        letter-spacing: 1px;
+    }
+    
+    section .noi-dung .form .input-form {
+        margin-bottom: 20px;
+    }
+    
+    section .noi-dung .form .input-form span {
+        font-size: 16px;
+        margin-bottom: 5px;
+        display: inline-block;
+        color: #607db8;
+        letter-spacing: 1px;
+    }
+    
+    section .noi-dung .form .input-form input {
+        width: 100%;
+        padding: 10px 20px;
+        outline: none;
+        border: 1px solid #ff9933;
+        font-size: 16px;
+        letter-spacing: 1px;
+        color: #607d8b;
+        background: transparent;
+        border-radius: 30px;
+    }
+    
+    section .noi-dung .form .input-form input[type="submit"] {
+        background: #ff9933;
+        color: #fff;
+        outline: none;
+        border: none;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.12);
+    }
+    
+    button {
+        background: #ff9933;
+        color: #fff;
+        outline: none;
+        border: none;
+        font-weight: 500;
+    }
+    
+    section {
+        width: 100%;
+    }
+    
+    section .noi-dung .form .input-form input[type="submit"]:hover {
+        background: #f53677;
+    }
+    
+    section .noi-dung .form .nho-dang-nhap {
+        margin-bottom: 10px;
+        color: #607d8b;
+        font-size: 14px;
+    }
+    
+    section .noi-dung .form .input-form p {
+        color: #607d8b;
+    }
+    
+    section .noi-dung .form .input-form p a {
+        color: #ff9933;
+    }
+    
+    section .noi-dung .form h3 {
+        color: #ff9933;
+        text-align: center;
+        margin: 80px 0 10px;
+        font-weight: 500;
+    }
+    
+    section .noi-dung .form .icon-dang-nhap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    section .noi-dung .form .icon-dang-nhap li {
+        list-style: none;
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    section .noi-dung .form .icon-dang-nhap li:nth-child(1) {
+        color: #3b5999;
+    }
+    
+    section .noi-dung .form .icon-dang-nhap li:nth-child(2) {
+        color: #dd4b39;
+    }
+    
+    section .noi-dung .form .icon-dang-nhap li:nth-child(3) {
+        color: #55acee;
+    }
+    
+    section .noi-dung .form .icon-dang-nhap li i {
+        font-size: 24px;
+    }
+    
+    @media (max-width: 100%) {
+        section .img-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        section .noi-dung {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        section .noi-dung .form {
+            width: 100%;
+            padding: 40px;
+            background: rgba(255 255 255 / 0.9);
+            margin: 50px;
+        }
+        section .noi-dung .form h3 {
+            color: #607d8b;
+            text-align: center;
+            margin: 30px 0 10px;
+            font-weight: 500;
+        }
+    }
+</style>
+
+<body>
+    <div class="header">
+        <a id="banner"><img src="img/logo2hand.jpg" style="width:30%"></a>
+        <div class="header-right">
+            <!-- <li><a href="./dangnhap.html">Đăng nhập</a></li> -->
+            <div class="box">
+                <!-- <div class="container-1">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <input type="tìm kiếm" id="search" placeholder="Search..." />
+                </div> -->
+            </div>
+        </div>
+        <div id="menu">
+            <ul>
+                <li><a href="http://localhost:3004/index" Tile="Trang chủ" class="active">Trang chủ </a></li>
+                    <li><a href="http://localhost:3004/shopp">Shop</a></li>
+                    <li><a href="http://localhost:3004/ban">Bán</a></li>
+                    <li><a href="http://localhost:3004/tintuc">Tin Tức</a></li>
+                    <li><a href="http://localhost:3004/lienhe">Liên Hệ</a></li>
+                    <li><a href="http://localhost:3004/dangnhap">Đăng nhập</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="header1">
+        <a class="home"><img class="logo" src="img/logo2hand.jpg"></a>
+        <ul id="navmobi">
+            <li class="bank"><a class="tour" href="http://localhost:3004/index" Tile="Trang chủ" class="active">Trang chủ </a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/shopp">Shop</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/ban">Bán</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/tintuc">Tin Tức</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/lienhe">Liên Hệ</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/dangnhap">Đăng nhập</a></li>
+        </ul>
+
+        <div id="husbank">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
+
+    <main>
+        <section style="margin: 0 ; text-align: center; justify-content: center;">
+
+            <!--Kết Thúc Phần Hình Ảnh-->
+            <!--Bắt Đầu Phần Nội Dung-->
+            <!-- <div class="noi-dung">
+         <div class="form">
+             <h2>Trang Đăng Nhập</h2>
+             <form action="" id="form_login">
+                <table>
+                 <div class="input-form">
+                     <span>Tên Người Dùng</span>
+                     <input type="text"  id="userName">
+                 </div>
+                 <div class="input-form">
+                     <span>Mật Khẩu</span>
+                     <input type="password"  id="password">
+                 </div>
+                 <div class="nho-dang-nhap">
+                     <label><input type="checkbox" > Nhớ Đăng Nhập</label>
+                 </div>
+                 <div class="input-form">
+                     <input type="submit" value="Đăng Nhập" id="btnLogin" onclick="login()">
+                 </div>
+                
+                 <div class="input-form">
+                     <p>Bạn Chưa Có Tài Khoản? <a href="dangky.html">Đăng Ký</a></p>
+                 </div>
+                </table>
+             </form>
+             <h3>Đăng Nhập Bằng Mạng Xã Hội</h3>
+             <ul class="icon-dang-nhap">
+                 <li><i class="fa fa-facebook" aria-hidden="true"></i></li>
+                 <li><i class="fa fa-google" aria-hidden="true"></i></li>
+                 <li><i class="fa fa-twitter" aria-hidden="true"></i></li>
+             </ul>
+         </div>
+     </div> -->
+
+            <div id="content1" style="margin: 30px;">
+                <div style=" margin-bottom:20px ; width: 188px; margin-top: 40px;">
+                    <p style=" font-size: 20px; font-weight: bold; border-bottom: 5px solid rgba(20, 205, 17, 0.837); color: #55acee;">TRANG ĐĂNG NHẬP</p>
+                </div>
+                <div>
+                    <table>
+                        <tr>
+                            <td style="text-align: left; color: darkslateblue;">
+
+                                Tên Người Dùng
+                            </td>
+                        </tr><br>
+                        <tr>
+                            <td>
+                                <input style="width: 350px; height: 40px; background-color: #B2B2B2;; border-radius: 20px; border: 1px solid salmon; margin-top: 5px; " type="text" id="userName" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div>
+                    <table style="margin: 0 auto;">
+                        <tr>
+                            <td style="text-align: left; color: darkslateblue;">
+                                Mật khẩu
+                            </td>
+                        </tr><br>
+                        <tr>
+                            <td>
+                                <input style="width: 350px; height: 40px; background-color: #B2B2B2;; border-radius: 20px; border: 1px solid salmon; margin-top: 5px;" type="password" id="password" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <button style=" width: 350px; height: 40px; background-color: #dd4b39;; border-radius: 20px; border: 1px solid salmon; margin-top: 30px; cursor: pointer;" onclick="login()">Đăng nhập</button>
+
+                                <div class="input-form">
+                                    <p style="text-align: left; margin-top: 15px;">Bạn Chưa Có Tài Khoản? <a href="http://localhost:3004/dangky">Đăng Ký</a></p>
+                                </div>
+                    </table>
+                    </form>
+                    <h3 style="color: darkgoldenrod; margin-top: 50px;">Đăng Nhập Bằng Mạng Xã Hội</h3>
+                    <ul class="icon-dang-nhap" style="display: flex; text-align: center; justify-content: center;">
+                        <li><i style="font-size: 25px; margin: 15px; color: blue;" class="fa fa-facebook" aria-hidden="true"></i></li>
+                        <li><i style="font-size: 25px; margin: 15px; color: brown;" class="fa fa-google" aria-hidden="true"></i></li>
+                        <li><i style="font-size: 25px; margin: 15px; color: #55acee;" class="fa fa-twitter" aria-hidden="true"></i></li>
+                    </ul>
+                    </td>
+                    </tr><br>
+                    </table>
+                </div>
+            </div>
+            <!--Kết Thúc Phần Nội Dung-->
+
+        </section>
+        </br>
+        <footer>
+            <div class="container5">
+                <!--Bắt Đầu Nội Dung Giới Thiệu-->
+                <div class="noi-dung about">
+                    <h2>Về Chúng Tôi</h2>
+                    <p>Nhằm mục đích của khách hàng khi thay vì vứt đi những mặt hàng giày cũ, không vừa chân nhưng cần thanh lý, những khách hàng không có đủ điều kiện mua hàng mới nhưng vẫn thích và đam mê giày. Vì vậy đó
+                        là cơ sở để chúng tôi thành lập</p>
+                    <ul class="social-icon">
+                        <li><a href="https://www.facebook.com/hoanganh3203/"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                        <li><a href=""><i class="fa fa-youtube"></i></a></li>
+                    </ul>
+                </div>
+                <!--Kết Thúc Nội Dung Giới Thiệu-->
+                <!--Bắt Đầu Nội Dung Đường Dẫn-->
+                <div class="noi-dung links">
+                    <h2>Đường Dẫn</h2>
+                    <ul>
+                        <li><a href="index.html">Trang Chủ</a></li>
+                        <li><a href="#">Về Chúng Tôi</a></li>
+                        <li><a href="#">Thông Tin Liên Lạc</a></li>
+                        <li><a href="#">Dịch Vụ</a></li>
+                        <li><a href="#">Điều Kiện Chính Sách</a></li>
+                    </ul>
+                </div>
+                <!--Kết Thúc Nội Dung Đường Dẫn-->
+                <!--Bắt Đâu Nội Dung Liên Hệ-->
+                <div class="noi-dung contact">
+                    <h2>Thông Tin Liên Hệ</h2>
+                    
+                    <ul class="info">
+                        <li>
+                            <span><i class="fa fa-map-marker"></i></span>
+                            <span>
+                         145 Lê Lư - Phú Thọ Hòa - Tân Phú - TP Hồ Chí Minh<br />
+                         Việt Nam</span>
+                        </li>
+                        <li>
+                            <span><i class="fa fa-phone"></i></span>
+                            <p><a href="#">+84 898 638 123</a>
+                            </p>
+                        </li>
+                        <li>
+                            <span><i class="fa fa-envelope"></i></span>
+                            <p><a href="#">phamhoanganh5603@gmail.com</a></p>
+                        </li>
+                        <li>
+                            <form class="form">
+                                <input type="email" class="form__field" placeholder="Đăng Ký Subscribe Email" />
+                                <button type="button" class="btn btn--primary  uppercase">Gửi</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                <!--Kết Thúc Nội Dung Liên Hệ-->
+            </div>
+        </footer>
+    </main>
+    <script>
+        const husbank = document.querySelector("#husbank");
+        const navmobi = document.querySelector("#navmobi");
+        husbank.addEventListener("click", mobiMenu);
+        function mobiMenu(){
+          husbank.classList.toggle("active");
+          navmobi.classList.toggle("active");
+        }
+      </script>
+</body>
+
+</html>

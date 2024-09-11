@@ -1,0 +1,508 @@
+
+/* Style the header with a grey background and some padding */
+.header {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 10px 10px ; 
+}
+
+/* Style the header links */
+.header a {
+  float: left;
+  color: black;
+  text-align: center;*/
+  padding: 0px 0px 0px 0px;
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 10px;
+  border-radius: 4px;
+}
+
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.header a.logo {
+  font-size: 0px;
+  margin: 0px 0px 0px 0px;
+  font-weight: bold;
+  color: red;
+}
+.menu{
+  ma
+}
+
+/* Change the background color on mouse-over */
+.header a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Style the active/current link*/
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+/* Float the link section to the right */
+.header-right {
+  float: right;
+  margin: 5px 0px 0px 0px;
+}
+
+
+#menu_bai{
+  width: 100%;
+  height: auto;
+}  
+
+#timkiem{
+  margin: 40px;
+  height: 80px;
+  width: 700px;
+  display: inline-block;
+  border: 3px red solid;
+  background-color: rgb(205, 173, 0);
+}
+
+#txtSearch{
+  margin: 15px;
+  width: 300px;
+  height: 50px;
+
+}
+
+.tim{
+    display: inline-block;
+    width: 90px;
+    height: 38px;
+    font-weight: bold;
+    border-radius: 10px ;
+    cursor: pointer;
+}
+
+.tim:hover{
+    background-color: rgb(152, 129, 129);
+}
+
+#ddSort{
+    height: 35px; 
+    width: 100px;
+    border: 3px solid;
+    font-weight: bold;
+    border-radius: 1px;
+    cursor: pointer;
+   
+}
+
+#nav2{
+  display: inline-block;
+  text-decoration: none;
+}   
+
+#nav2 li{
+ list-style-type: none;
+}
+
+#nav2 li a{
+  text-decoration: none;
+  line-height: 50px;
+  display: block;
+  color: #000;
+}
+
+#nav2 > li:hover > a{
+  color: red;
+}
+
+#nav2 .moreinfo{
+  display: none; 
+  min-width: 100px;
+  position: absolute;
+  margin-left: 105px;
+  margin-top: 50px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#nav2 .moreinfo a{
+  color:#000;
+  padding: 0 50px 0 10px ;
+  line-height: 30px;
+  font-size: 15px;
+}
+
+#nav2 li:hover .moreinfo {
+  display: block;
+}
+
+
+
+.header1{
+  height: 50px;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  display: none;
+}
+
+#navmobi{
+  list-style-type: none;
+  position: absolute;
+  left: 80px;
+  display: none;
+  margin-top: 10px;
+}
+
+.bank{
+  display: inline-block;
+}
+
+.tour{
+  display: inline-block;
+  width: 100%;
+  line-height: 50px;
+  padding: 0 20px 0 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000 !important;
+  font-weight: bold;
+  margin-left: -15px;
+}
+
+.tour:hover{
+   display: block;
+   color: #DF3A01;
+   background-color: #DF3A01 !important;
+}
+
+.home{
+  width: 50px;
+  height: 50px;
+   text-decoration: none;
+   text-transform: uppercase;
+   color: #fff;
+   float: left;
+   display: none;
+}
+
+.logo{
+  width: 50px;
+  height: 40px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.home:hover{
+  background-color: #F7F2E0 !important;
+  color: #000;
+}
+
+#husbank{
+  display: none;
+   margin-top: 15px;
+   margin-right: 5px;
+   float: right;
+}
+
+.bar{
+width: 25px;
+height: 3px;
+display: flex;
+background-color: #4a563a;
+margin-bottom: 5px;
+}
+
+.mySlides{
+  width:1520px; 
+  height:600px;
+}
+
+.img-product{
+  width:250px;
+   height:250px;
+}
+
+.seachfb{
+  font-size: 30px;
+  padding: 10px 15px 10px 15px;
+  background-color: #F5F6CE;
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  top: 350px;
+  color: #B43104;
+  position: fixed;
+  cursor: pointer;
+}
+
+.seachfb:hover{
+  padding: 10px  15px 10px 40px;
+}
+
+#contenttt1{
+  margin: 0 10px;
+}
+
+@media screen and (max-width: 800px){
+
+  #menu_bai{
+    width: 100%;
+    height: auto;
+  }
+  .header1{
+    display: block;
+    width: 100% !important;
+  }
+
+  .header{
+    display: none;
+  }
+
+  .home{
+    display: block;
+  }
+
+  #navmobi{
+    position: fixed;
+    left: -100%;
+    top: 3em;
+    display: flex;
+    flex-direction: column;
+    background-color: #F7F2E0;
+    width: 100%;
+    transition: 0.5s;
+}
+
+#navmobi.active{
+   left: 0;
+}
+
+
+#husbank{
+    display: block;
+    cursor: pointer;
+    z-index: 3;
+}
+
+/* làm chế độ cho phần thân trang index */
+
+.w3-content{
+  margin-top: 70px;
+  width: 100%;
+  height: auto;
+}
+.mySlides{
+  width: 100%;
+  height: 350px;
+}
+.w3-display-container{
+  width: 100%;
+  height: auto;
+}
+
+.container{
+  height: auto;
+  width: 100%;
+}
+
+.row{
+  height: auto;
+  width: 100%;
+}
+
+.col-sm-3{
+  height: auto;
+  width: 100%;
+}
+
+.product-image-wrapper{
+  height: auto;
+  width: 100%;
+}
+
+.mySlides01{
+  height: auto;
+  width: 100%;
+}
+
+
+.img-product{
+  width: 300px;
+  height: 400px;
+}
+
+
+/* lamf che do thu gon cho trang shopp */
+.container{
+  margin-top: 70px;
+  height: auto;
+  width: 100%;
+}
+
+#contenttt1{
+  width: 100%;
+  height: auto;
+  margin-left: 10%;
+}
+
+/* lam chu de thu gon cho trang ban */
+
+}
+
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+@media screen and (max-width: 500px) {
+  /*.header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }*/
+  .header-right {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  margin-right: 30px;
+  /*padding: 5px 0px 5px 0px;*/
+  }
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  font-size: 17px;
+}
+
+.container1 {
+  position: relative;
+  max-width:500px;
+  margin: 0px 0px 0px 0px;
+}
+
+.container1 img {vertical-align: middle;}
+
+.container1 .content { position: absolute; bottom: 0; background: rgb(0, 0, 0);
+/* Fallback color */ background: rgba(0, 0, 0, 0.5); /* Black background with
+0.5 opacity */ color: #f1f1f1; width: 100%; padding: 0px; }
+
+
+
+
+#menu ul {
+margin: 0px;
+padding: 10px 0px 26px 0px;
+/*margin-left: 500px;*/
+}
+
+#menu ul li{
+list-style: none;
+float: left;  
+
+}
+.submenu{
+  position: absolute;
+}
+
+#menu ul li a {
+text-decoration: none;
+text-transform: uppercase;  
+line-height: 40px;
+padding: 0px 50px 0px 50px;
+border-left: 1px solid black;
+display: block;
+font-weight: bold;
+}
+
+#menu ul li a:hover {
+background: red;
+color: yellow;}
+#menu ul li a.active {
+background: green;
+}
+
+
+
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+header{
+    background-color: #cccccc;
+    min-height: 70px;
+    padding: 15px;
+}
+main{
+    background-color: #dddddd;
+    min-height: 300px;
+    padding: 7.5px 15px;
+}
+footer{
+    background-color: #cccccc;
+    min-height: 70px;
+    padding: 15px;
+}
+.container1{
+    width: 100%;
+    max-width: 1600px;
+    margin-left:0px;
+    margin-right: 0px;
+}
+.login-form{
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: #f2f2f2;
+    padding: 15px;
+    border: 2px dotted #cccccc;
+    border-radius: 10px;
+}
+h1{
+    color: #009999;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+.input-box{
+    margin-bottom: 10px;
+}
+.input-box input{
+    padding: 7.5px 15px;
+    width: 100%;
+    border: 1px solid #cccccc;
+    outline: none;
+}
+.btn-box{
+    text-align: right;
+    margin-top: 30px;
+}
+.btn-box button{
+    padding: 7.5px 15px;
+    border-radius: 2px;
+    background-color: #ffff;
+    color: #f2f2f2;
+    border: none;
+    outline: none;
+}
+
+
+.container-1{
+  width: 200px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+
+}
+
+
+
+
+
+  #footer {
+
+  text-align: center;
+
+}
+

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="\index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome.min.css" rel="stylesheet">
+    <link href="/prettyPhoto.css" rel="stylesheet">
+    <link href="/footer.css" rel="stylesheet">
+    <link href="/price-range.css" rel="stylesheet">
+    <link href="/animate.css" rel="stylesheet">
+    <link href="/shopping-card.css" rel="stylesheet">
+    <link href="/product.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <link href="/responsive.css" rel="stylesheet">
+    <link href="/test_slide_product.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <script>
+        function displayProduct(data) {
+            var products = "<table border=1 width='100%'>";
+            products += "<tr><td>ID</td><td>Images</td><td>Name Products</td><td>Price</td><td>Number</td><td>Tools</td></tr>";
+            for (var i = 0; i < data.length; i++) {
+                products += `<tr>
+                    <td><span  id="id-${data[i].id}">${data[i].id}</span><br/></td>
+                    <td><img id="img-${data[i].id}" style="width:60px;height:60px" src='../img/${data[i].img}' /></a></td>
+                    <td><span  id="name-${data[i].id}">${data[i].name}</span><br/></td>
+                    <td> <span id="price-${data[i].id}" style="color:red">${data[i].price}</span>vnd</td>
+                    <td> <span id="num-${data[i].id}" style="color:red">${data[i].num}</span></td>
+                    <td><button style = "padding: 5px; margin-right: 5px" onClick="onEditProduct('${data[i].id}')"><i class="
+                    fas fa-pen"></i></button><button style = "padding: 5px"  onclick="deleteProduct('${data[i].id}')"><i class="
+                    fa fa-trash"></i></button></td>
+                </tr>`
+            }
+            products += "</table>";
+            $('#content').html(products);
+        }
+
+        function displaycustomers(data) {
+            var customers = "<table border=1 width='100%'>";
+            customers += "<tr><td>MaKH</td><td>UserName</td><td>Adress</td><td>PhoneNumber</td><td>PassWord</td><td>IdAdmin</td><td>UserLogin</td><td></td> </tr>";
+            for (var i = 0; i < data.length; i++) {
+                customers += `<tr>
+                    <td><span  id="MaKH-${data[i].MaKH}">${data[i].MaKH}</span><br/></td>  
+                    <td><span  id="user-${data[i].MaKH}">${data[i].TenKH}</span><br/></td>       
+                    <td> <span id="adress-${data[i].MaKH}" style="color:red">${data[i].DiaChi}</span></td>
+                    <td> <span id="phone-${data[i].MaKH}" style="color:red">${data[i].SDT}</span></td>
+                    <td> <span id="pass-${data[i].MaKH}" style="color:red">${data[i].Password}</span></td>
+                    <td> <span id="admin-${data[i].MaKH}" style="color:red">${data[i].IdAdmin}</span></td>
+                    <td> <span id="userlogin-${data[i].MaKH}" style="color:red">${data[i].UserLogin}</span></td>
+                    <td><button <button style = "padding: 5px; margin-right: 5px" onClick="onEditCustomer('${data[i].MaKH}')"><i class="
+                    fas fa-pen"></i></button><button <button style = "padding: 5px; margin-right: 5px" onclick="deleteCustomer('${data[i].MaKH}')"><i class="
+                    fa fa-trash"></i></button></td>
+                </tr>`
+            }
+            customers += "</table>";
+            $('#contentkttt').html(customers);
+        }
+
+        function displaybills(data) {
+            var bills = "<table border=1 width='100%'>";
+            bills += "<tr><td>MaHD</td><td>MaKH</td><td>Ngay Ban</td></tr>";
+            for (var i = 0; i < data.length; i++) {
+                bills += `<tr>
+                    <td><span  MaHD="MaHD-${data[i].MaHD}">${data[i].MaHD}</span><br/></td>
+                    <td><span  MaHD="MaKH-${data[i].MaHD}">${data[i].MaKH}</span><br/></td>
+                    <td> <span MaHD="NgayBan-${data[i].MaHD}" style="color:red">${data[i].NgayBan}</span></td>
+                </tr>`
+            }
+            bills += "</table>";
+            $('#contentbill').html(bills);
+        }
+
+
+        function updateproduts() {
+            $.post("/updateProduct", {
+                id: $("#productId").val(),
+                name: $("#productName").val(),
+                num: $("#productNum").val(),
+                price: $('#productPrice').val()
+            }, function(data, status) {
+                $.get("/getAllProduct", function(data, status) {
+                    displayProduct(data)
+                });
+            })
+        }
+
+
+        function updatecustomer() {
+            $.post("/updateCustomer", {
+                MaKH: $("#customertId").val(),
+                TenKH: $("#customertName").val(),
+                DiaChi: $("#customerAdress").val(),
+                SDT: $('#customerPhone').val(),
+                Password: $('#customerPass').val(),
+                IdAdmin: $('#customeradmin').val(),
+                UserLogin: $('#customerLogin').val()
+            }, function(data, status) {
+                $.get("/getcustomers", function(data, status) {
+                    displaycustomers(data)
+                });
+            })
+        }
+
+        function insertProduct() {
+            $.post("/insertProduct", {
+                name: $("#productNameInsert").val(),
+                num: $("#productNumInsert").val(),
+                price: $('#productPriceInsert').val()
+            }, function(data, status) {
+                $.get("/getAllProduct", function(data, status) {
+                    displayProduct(data)
+                });
+            })
+        }
+
+        function insertcustomer() {
+            $.post("/insertcustomer", {
+                TenKH: $("#customerNameInsert").val(),
+                DiaChi: $("#customerAdressInsert").val(),
+                SDT: $('#customerPhoneInsert').val(),
+                Password: $('#customerPassInsert').val(),
+                IdAdmin: $('#customerAdminInsert').val(),
+                UserLogin: $('#customerLoginInsert').val()
+            }, function(data, status) {
+                $.get("/getcustomers", function(data, status) {
+                    displaycustomers(data)
+                });
+            })
+        }
+
+        function deleteCustomer(MaKH) {
+            $.post("/deleteCustomer", {
+                MaKH: MaKH,
+            }, function(data, status) {
+                $.get("/getcustomers", function(data, status) {
+                    displaycustomers(data)
+                });
+            })
+        }
+
+        function deleteProduct(id) {
+            $.post("/deleteProduct", {
+                id: id,
+            }, function(data, status) {
+                $.get("/getAllProduct", function(data, status) {
+                    displayProduct(data)
+                });
+            })
+        }
+
+        function onEditProduct(id) {
+            $("#img").attr("src", $("#img-" + id).attr("src"));
+            $("#productId").val($("#id-" + id).text());
+            $("#productName").val($("#name-" + id).text());
+            $("#productPrice").val($("#price-" + id).text());
+            $("#productNum").val($("#num-" + id).text());
+        }
+
+        function onEditCustomer(MaKH) {
+            $("#customertId").val($("#MaKH-" + MaKH).text());
+            $("#customertName").val($("#user-" + MaKH).text());
+            $("#customerAdress").val($("#adress-" + MaKH).text());
+            $("#customerPhone").val($("#phone-" + MaKH).text());
+            $("#customerPass").val($("#pass-" + MaKH).text());
+            $("#customeradmin").val($("#admin-" + MaKH).text());
+            $("#customerLogin").val($("#userlogin-" + MaKH).text());
+        }
+        $(document).ready(function() {
+            $.get("http://localhost:3004/getAllProduct", function(data, status) {
+                displayProduct(data)
+            });
+        })
+
+        $(document).ready(function() {
+            $.get("http://localhost:3004/getcustomers", function(data, status) {
+                displaycustomers(data)
+            });
+        })
+
+        $(document).ready(function() {
+            $.get("http://localhost:3004/getbills", function(data, status) {
+                displaybills(data)
+            });
+        })
+    </script>
+</head>
+
+<body>
+    <style>
+        #content1 {
+            height: auto;
+            width: 100%;
+            background-color: rgb(238, 216, 174);
+        }
+        
+        #contentadmin {
+            height: auto;
+            width: 100%;
+            background-color: rgb(238, 216, 174);
+            padding: 30px;
+        }
+        
+        #tableadmin {
+            display: flex;
+            text-decoration: none
+        }
+        
+        #tablead {
+            height: auto;
+            width: 12%;
+            margin-right: 15px;
+            border: 2px solid #000;
+            border-radius: 5px;
+        }
+        
+        #tablead1 {
+            height: auto;
+            width: 85%;
+            background-color: #efdcbd;
+            border: 3px solid #333;
+            border-radius: 5px;
+        }
+        
+        #Cproduct {
+            height: 50px;
+            width: 150px;
+            background-color: red;
+            text-align: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            border: 1px solid #000;
+            border-radius: 5px;
+            margin-bottom: 13px;
+            line-height: 48px;
+            margin-left: 10px;
+        }
+        
+        #hvupdate {
+            background-color: yellow;
+            font-size: 15px;
+            padding: 10px 15px;
+            border: 2px solid #000;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        #hvupdate:hover {
+            background-color: red;
+        }
+        
+        #SPproduct {
+            margin: 15px;
+        }
+    </style>
+
+    <div class="header">
+        <a id="banner"><img src="img/logo2hand.jpg" style="width:30%"></a>
+        <div class="header-right">
+            <!-- <li><a href="./dangnhap.html">Đăng nhập</a></li> -->
+            <div class="box">
+                <div class="container-1">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <input type="tìm kiếm" id="search" placeholder="Search..." />
+                </div>
+            </div>
+        </div>
+        <div id="menu">
+            <ul>
+                <li><a href="http://localhost:3004/index" Tile="Trang chủ" class="active">Trang chủ </a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="ban.html">Bán</a></li>
+                <li><a href="tintuc.html">Tin Tức</a></li>
+                <li><a href="lienhe.html">Liên Hệ</a></li>
+                <li><a href="dangnhap.html">Đăng nhập</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="header1">
+        <a class="home"><img class="logo" src="img/logo2hand.jpg"></a>
+        <ul id="navmobi">
+            <li class="bank"><a class="tour" href="index.html" Tile="Trang chủ" class="active">Trang chủ </a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/shopp">Shop</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/ban">Bán</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/tintuc">Tin Tức</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/lienhe">Liên Hệ</a></li>
+            <li class="bank"><a class="tour" href="http://localhost:3004/dangnhap">Đăng nhập</a></li>
+        </ul>
+
+        <div id="husbank">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
+
+    <div id="contentadmin">
+        <div id="tableadmin">
+            <div id="tablead">
+                <div style="text-align: center;  margin-bottom: 20px;">
+                    <h1>ADMIN</h1>
+                </div>
+                <div id="Cproduct"><a style="text-decoration: none; color: #000;" href="#" onclick="$(tablecustomer).css('display', 'none' ), $(tableproduct).css('display', ''),  $(tablebill).css('display', 'none')">Products</a></div>
+                <div id="Cproduct"><a style="text-decoration: none; color: #000;" href="#" onclick="$(tableproduct).css('display', 'none'), $(tablecustomer).css('display', '') ,  $(tablebill).css('display', 'none')">Customers</a></div>
+                <div id="Cproduct"><a style="text-decoration: none; color: #000;" href="#" onclick="$(tableproduct).css('display', 'none'), $(tablecustomer).css('display', 'none') ,  $(tablebill).css('display', '')">Bills</a></div>
+            </div>
+            <div id="tablead1">
+                <div style=" margin: 15px;  " id="tableproduct">
+                    <div style="display: flex;">
+                        <div style="display: flex;">
+                            <div style="height: auto; width: 50%;">
+                                <div style="font-size: 30px; font-weight: bold; margin-bottom: 20px;">Products</div>
+                                <img style="border-radius: 10px; border: 3px solid #000; height: 200px; width: 200px;" id="img">
+                            </div>
+                            <div style="height: auto; width: 20%;">
+
+
+                                <div style="margin:50px 0;">
+
+                                    <tr>
+                                        <td>
+                                            ID:
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input id="productId" type="text">
+                                        </td>
+                                    </tr><br>
+                                    <tr>
+                                        <td>
+                                            Name:
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input id="productName" type="text">
+                                        </td>
+                                    </tr><br>
+                                    <tr>
+                                        <td>
+                                            Price:
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input id="productPrice" type="text">
+                                        </td>
+                                    </tr><br>
+                                    <tr>
+                                        <td>
+                                            Num:
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input id="productNum" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button id="hvupdate" onclick="updateproduts()">update</button>
+                                        </td>
+                                    </tr>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div style="height: auto; width: 40%;">
+                            <tr>
+                                <td>
+                                    <form style="height: 60px; width: 470px; border: 2px solid #000; background-color: #fff; border-radius: 5px;margin-bottom: 20px; margin-left: 50px; display: flex;" action="/uploadphoto" enctype="multipart/form-data" method="POST">
+                                        <input style="margin-top: 17px; " type="file" name="img1" accept="public/img" />
+                                        <input style="height: 35px; width:  100px; border-radius: 5px; margin-top: 10px;" type="submit" value="Upload Photo" />
+                                    </form>
+                                </td>
+                            </tr>
+                            <div style="margin-left: 50px;">
+                                <tr>
+                                    <td>
+                                        Name:
+                                    </td>
+                                </tr><br>
+                                <tr>
+                                    <td>
+                                        <input id="productNameInsert" type="text">
+                                    </td>
+                                </tr><br>
+                                <tr>
+                                    <td>
+                                        Num:
+                                    </td>
+                                </tr><br>
+                                <tr>
+                                    <td>
+                                        <input id="productNumInsert" type="text">
+                                    </td>
+                                </tr><br>
+                                <tr>
+                                    <td>
+                                        Price:
+                                    </td>
+                                </tr><br>
+                                <tr>
+                                    <td>
+                                        <input id="productPriceInsert" type="text">
+                                    </td>
+                                </tr><br>
+                                <tr>
+                                    <td>
+                                        <button id="hvupdate" onclick="insertProduct()">Insert</button>
+                                    </td>
+                                </tr>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="content"></div>
+
+                </div>
+
+                <div id="tablecustomer" style=" margin: 15px;  display: none;">
+                    <div style="font-size: 30px; font-weight: bold; margin: 15px;">Customers</div>
+                    <div style="display: flex; margin: 15px;">
+                        <div style="height: auto; width: 60%; ">
+                            <tr>
+                                <td>
+                                    UserName:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 31px; margin-bottom: 15px;" id="customerNameInsert" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    Adress:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 54px; margin-bottom: 15px;" id="customerAdressInsert" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    PhoneNumber:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 7px;" id="customerPhoneInsert" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    PassWord:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 34px; margin-bottom: 15px; margin-top: 15px;" id="customerPassInsert" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    IdAdmin:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 45px; margin-bottom: 15px;" id="customerAdminInsert" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    UserLogin:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 34px; margin-bottom: 15px;" id="customerLoginInsert" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    <button id="hvupdate" onclick="insertcustomer()">Insert</button>
+                                </td>
+                            </tr>
+                        </div>
+
+                        <div style=" width: 40%; height: auto;">
+                            <tr>
+                                <td>
+                                    Id:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 82px; margin-bottom: 15px;" id="customertId" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    UserName:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 28px; margin-bottom: 15px;" id="customertName" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    Adress:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 51px; margin-bottom: 15px;" id="customerAdress" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    PhoneNumber:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 4px;" id="customerPhone" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    PassWord:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 30px; margin-bottom: 15px; margin-top: 15px;" id="customerPass" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    IdAdmin:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 42px; margin-bottom: 15px;" id="customeradmin" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    UserLogin:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input style="margin-left: 31px; margin-bottom: 15px;" id="customerLogin" type="text">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td>
+                                    <button id="hvupdate" onclick="updatecustomer()">update</button>
+                                </td>
+                            </tr>
+                        </div>
+                    </div>
+                    <div id="contentkttt"></div>
+                </div>
+                <div id="tablebill">
+                    <div id="contentbill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer>
+        <div class="container5">
+            <!--Bắt Đầu Nội Dung Giới Thiệu-->
+            <div class="noi-dung about">
+                <h2>Về Chúng Tôi</h2>
+                <p>Nhằm mục đích của khách hàng khi thay vì vứt đi những mặt hàng giày cũ, không vừa chân nhưng cần thanh lý, những khách hàng không có đủ điều kiện mua hàng mới nhưng vẫn thích và đam mê giày. Vì vậy đó là
+                    cơ sở để chúng tôi thành lập</p>
+                <ul class="social-icon">
+                    <li><a href="https://www.facebook.com/hoanganh3203/"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                    <li><a href=""><i class="fa fa-youtube"></i></a></li>
+                </ul>
+            </div>
+            <!--Kết Thúc Nội Dung Giới Thiệu-->
+            <!--Bắt Đầu Nội Dung Đường Dẫn-->
+            <div class="noi-dung links">
+                <h2>Đường Dẫn</h2>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="#">Về Chúng Tôi</a></li>
+                    <li><a href="#">Thông Tin Liên Lạc</a></li>
+                    <li><a href="#">Dịch Vụ</a></li>
+                    <li><a href="#">Điều Kiện Chính Sách</a></li>
+                </ul>
+            </div>
+            <!--Kết Thúc Nội Dung Đường Dẫn-->
+            <!--Bắt Đâu Nội Dung Liên Hệ-->
+            <div class="noi-dung contact">
+                <h2>Thông Tin Liên Hệ</h2>
+                <ul class="info">
+                    <li>
+                        <span><i class="fa fa-map-marker"></i></span>
+                        <span>
+                           145 Lê Lư - Phú Thọ Hòa - Tân Phú - TP Hồ Chí Minh<br />
+                            Việt Nam</span>
+                    </li>
+                    <li>
+                        <span><i class="fa fa-phone"></i></span>
+                        <p><a href="#">+84 898 638 123</a>
+                        </p>
+                    </li>
+                    <li>
+                        <span><i class="fa fa-envelope"></i></span>
+                        <p><a href="#">phamhoanganh5603@gmail.com</a></p>
+                    </li>
+                    <li>
+                        <form class="form">
+                            <input type="email" class="form__field" placeholder="Đăng Ký Subscribe Email" />
+                            <button type="button" class="btn btn--primary  uppercase">Gửi</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <!--Kết Thúc Nội Dung Liên Hệ-->
+        </div>
+    </footer>
+
+    <script>
+        const husbank = document.querySelector("#husbank");
+        const navmobi = document.querySelector("#navmobi");
+        husbank.addEventListener("click", mobiMenu);
+        function mobiMenu(){
+          husbank.classList.toggle("active");
+          navmobi.classList.toggle("active");
+        }
+      </script>
+</body>
+
+</html>
